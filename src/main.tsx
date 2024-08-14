@@ -5,16 +5,17 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import "./index.css";
 import RootLayout from "./layouts/root-layout";
 import DashboardLayout from "./layouts/dashboard-layout";
-import IndexPage from "./routes";
-import SignInPage from "./routes/sign-in";
 import { RouterProvider, createBrowserRouter } from "react-router-dom";
+import { HomePage, SignInPage } from "./routes";
+import { NotFound } from "./components/misc";
 
 const router = createBrowserRouter([
   {
     element: <RootLayout />,
     children: [
-      { path: "/", element: <IndexPage /> },
+      { path: "/", element: <HomePage /> },
       { path: "/sign-in/*", element: <SignInPage /> },
+      { path: "*", element: <NotFound /> },
 
       {
         element: <DashboardLayout />,

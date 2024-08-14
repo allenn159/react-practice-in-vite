@@ -21,7 +21,9 @@ export default function RootLayout() {
       <Box width="100vw" height="100vh">
         <Header />
         <main>
-          <Outlet />
+          <Box mx="25%">
+            <Outlet />
+          </Box>
         </main>
       </Box>
     </ClerkProvider>
