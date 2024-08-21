@@ -12,7 +12,5 @@ export default function DashboardLayout() {
     }
   }, [isLoaded]);
 
-  if (!isLoaded) return "Loading...";
-
   return <Outlet />;
 }
