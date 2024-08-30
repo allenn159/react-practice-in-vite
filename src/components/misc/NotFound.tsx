@@ -17,7 +17,7 @@ const NotFound = () => (
     <Text fontSize="18px" mt={3} mb={2}>
       Page Not Found
     </Text>
-    <Text color={"gray.500"} mb={6}>
+    <Text color="white" mb={6}>
       The page you're looking for does not seem to exist.
     </Text>
 

@@ -1,3 +1,4 @@
 import NotFound from "./NotFound";
+import Welcome from "./Welcome";
 
-export { NotFound };
+export { NotFound, Welcome };

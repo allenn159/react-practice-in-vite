@@ -18,7 +18,12 @@ export default function RootLayout() {
       routerReplace={(to) => navigate(to, { replace: true })}
       publishableKey={PUBLISHABLE_KEY}
     >
-      <Box width="100vw" height="100vh">
+      <Box
+        width="100vw"
+        height="100vh"
+        backgroundColor="gray.700"
+        textColor="white"
+      >
         <Header />
         <main>
           <Box mx="25%">

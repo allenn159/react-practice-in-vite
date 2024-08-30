@@ -14,6 +14,7 @@
     "@clerk/clerk-react": "^5.4.0",
     "@emotion/react": "^11.13.0",
     "@emotion/styled": "^11.13.0",
+    "@fontsource/inter": "^5.0.20",
     "@tanstack/react-query": "^5.51.23",
     "framer-motion": "^11.3.24",
     "react": "^18.3.1",

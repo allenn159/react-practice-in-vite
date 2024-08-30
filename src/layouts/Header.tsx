@@ -8,9 +8,7 @@ export function Header() {
       <Flex p="3" alignItems="center" justifyContent="space-between" mb="4">
         <Box>
           <Link to="/" style={{ textDecoration: "none" }}>
-            <Heading size="2xl" color="black">
-              Flipper
-            </Heading>
+            <Heading size="2xl">Flippr</Heading>
           </Link>
         </Box>
         <Flex>
@@ -33,10 +31,9 @@ export function Header() {
             <ChakraLink
               as={Link}
               to="/sign-in"
-              color="blue.500"
               fontSize="lg"
               textDecoration="none"
-              _hover={{ color: "blue.600", textDecoration: "none" }}
+              _hover={{ color: "gray.200", textDecoration: "none" }}
             >
               Sign In
             </ChakraLink>

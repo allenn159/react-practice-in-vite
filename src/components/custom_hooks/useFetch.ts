@@ -4,10 +4,13 @@ interface FetchOptions extends RequestInit {
   headers?: Record<string, string>;
 }
 
+type RequestMethods = "GET" | "POST" | "PUT" | "PATCH" | "DELETE";
+
 const useFetch = () => {
   const { getToken } = useAuth();
 
   const fetchWrapper = async <T>(
+    requestMethod: RequestMethods,
     url: string,
     options: FetchOptions = {}
   ): Promise<T> => {
@@ -22,9 +25,11 @@ const useFetch = () => {
       headers["Authorization"] = `Bearer ${token}`;
     }
 
-    console.log(headers);
-
-    const response = await fetch(url, { headers: { ...headers } });
+    const response = await fetch(url, {
+      method: requestMethod,
+      headers: { ...headers },
+      ...options,
+    });
     const data: T = await response.json();
 
     return data;
