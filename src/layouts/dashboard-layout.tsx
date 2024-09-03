@@ -1,7 +1,7 @@
 import * as React from "react";
 import { useAuth } from "@clerk/clerk-react";
 import { Outlet, useNavigate } from "react-router-dom";
-import { Flex, Spinner } from "@chakra-ui/react";
+import { CustomSpinner } from "~/components/misc";
 
 export default function DashboardLayout() {
   const { userId, isLoaded } = useAuth();
@@ -14,11 +14,7 @@ export default function DashboardLayout() {
   }, [isLoaded]);
 
   if (!isLoaded) {
-    return (
-      <Flex justifyContent="center" alignItems="center" mt="24">
-        <Spinner color="blue.500" size="lg" />
-      </Flex>
-    );
+    return <CustomSpinner mt="24" />;
   }
 
   return <Outlet />;

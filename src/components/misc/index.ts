@@ -1,4 +1,5 @@
 import NotFound from "./NotFound";
 import Welcome from "./Welcome";
+import { CustomSpinner } from "./Spinner";
 
-export { NotFound, Welcome };
+export { NotFound, Welcome, CustomSpinner };

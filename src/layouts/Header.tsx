@@ -8,7 +8,7 @@ export function Header() {
       <Flex p="3" alignItems="center" justifyContent="space-between" mb="4">
         <Box>
           <Link to="/" style={{ textDecoration: "none" }}>
-            <Heading size="2xl">Flippr</Heading>
+            <Heading size="2xl">FlipprApp</Heading>
           </Link>
         </Box>
         <Flex>

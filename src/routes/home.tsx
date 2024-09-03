@@ -1,6 +1,7 @@
-import { Flex, Spinner } from "@chakra-ui/react";
+import { Flex } from "@chakra-ui/react";
 import { useAuth } from "@clerk/clerk-react";
 import { Welcome } from "~/components/misc";
+import { CustomSpinner } from "~/components/misc";
 
 export default function HomePage() {
   const { isSignedIn, isLoaded } = useAuth();
@@ -8,9 +9,7 @@ export default function HomePage() {
   return (
     <>
       {!isLoaded ? (
-        <Flex justifyContent="center" alignItems="center" mt="24">
-          <Spinner color="blue.500" size="lg" />
-        </Flex>
+        <CustomSpinner mt="24" />
       ) : isSignedIn ? (
         <Welcome />
       ) : (

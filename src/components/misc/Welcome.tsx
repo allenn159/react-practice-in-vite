@@ -1,11 +1,8 @@
 // src/pages/NotFound.jsx
 import { Box, Heading, Text } from "@chakra-ui/react";
 import { Link } from "@chakra-ui/react";
-import { useUser } from "~/requestHooks";
 
 const Welcome = () => {
-  const { data: user } = useUser();
-
   return (
     <Box textAlign="center" py={10} px={6}>
       <Heading

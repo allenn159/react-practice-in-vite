@@ -1,6 +1,7 @@
 import { Outlet, useNavigate } from "react-router-dom";
 import { ClerkProvider } from "@clerk/clerk-react";
 import { Header } from "./Header";
+import { Footer } from "./Footer";
 import { Box } from "@chakra-ui/react";
 
 const PUBLISHABLE_KEY = import.meta.env.VITE_CLERK_PUBLISHABLE_KEY;
@@ -18,18 +19,14 @@ export default function RootLayout() {
       routerReplace={(to) => navigate(to, { replace: true })}
       publishableKey={PUBLISHABLE_KEY}
     >
-      <Box
-        width="100vw"
-        height="100vh"
-        backgroundColor="gray.700"
-        textColor="white"
-      >
+      <Box backgroundColor="gray.700" textColor="white" minHeight="100vh">
         <Header />
         <main>
-          <Box mx="25%">
+          <Box mx="10%">
             <Outlet />
           </Box>
         </main>
+        <Footer />
       </Box>
     </ClerkProvider>
   );
