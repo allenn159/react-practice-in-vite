@@ -14,7 +14,7 @@ export default function DashboardLayout() {
   }, [isLoaded]);
 
   if (!isLoaded) {
-    return <CustomSpinner mt="24" />;
+    return <CustomSpinner mt="48" />;
   }
 
   return <Outlet />;

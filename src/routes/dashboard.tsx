@@ -1,18 +1,19 @@
 import { Box } from "@chakra-ui/react";
-import { ProductsTable } from "~/components/dashboard";
-import { ProductsDashboardProvider } from "~/components/dashboard";
+import {
+  ProductsTable,
+  ProductsDashboardProvider,
+  ProductsDashboardControls,
+} from "~/components/dashboard";
 
 export default function Dashboard() {
   return (
-    <Box
-      backgroundColor="white"
-      overflowX="auto"
-      borderRadius="4px"
-      mt="12"
-      height="900px"
-    >
+    <Box overflowX="auto" overflowY="hidden" borderRadius="4px" mt="10">
       <ProductsDashboardProvider>
-        <ProductsTable overflowY="auto" />
+        <ProductsDashboardControls mb="4">
+          <Box height="800px" overflowY="auto">
+            <ProductsTable />
+          </Box>
+        </ProductsDashboardControls>
       </ProductsDashboardProvider>
     </Box>
   );

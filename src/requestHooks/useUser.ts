@@ -10,5 +10,7 @@ export function useUser() {
     queryFn: async () => {
       return await fetchWrapper<User>("GET", "http://localhost:3000/api/user");
     },
+    refetchOnWindowFocus: false,
+    staleTime: Infinity,
   });
 }

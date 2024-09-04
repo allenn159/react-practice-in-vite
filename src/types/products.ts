@@ -10,6 +10,7 @@ export interface Product {
   user_id: number;
   tags: Tag[] | null;
   fees: number | null;
+  created_at: number;
 }
 
 export interface GetProductsQueryParams {

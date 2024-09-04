@@ -1,4 +1,4 @@
-import { useQuery } from "@tanstack/react-query";
+import { keepPreviousData, useQuery } from "@tanstack/react-query";
 import { useFetch } from "~/components/custom_hooks";
 import type { Product, GetProductsQueryParams } from "~/types";
 
@@ -14,5 +14,8 @@ export function useProducts(queryParams?: GetProductsQueryParams) {
         { body: JSON.stringify(queryParams) }
       );
     },
+    placeholderData: keepPreviousData,
+    refetchOnWindowFocus: false,
+    staleTime: Infinity,
   });
 }

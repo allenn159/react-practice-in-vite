@@ -51,7 +51,7 @@ export function ProductsDashboardProvider({
   const [dateRange, setDateRange] = useState({ from: 0, to: currentTime });
   const [sort, setSort] = useState<
     undefined | ProductsDashboardContext["sort"]
-  >(undefined);
+  >({ name: undefined, created_at: "DESC" });
   const {
     data: products,
     isLoading,
@@ -59,7 +59,7 @@ export function ProductsDashboardProvider({
   } = useProducts({
     limit: limit,
     offset: offset,
-    searchTerm: searchTerm,
+    searchTerm: debouncedSearchTerm,
     dateRange: dateRange,
     sort: sort,
   });

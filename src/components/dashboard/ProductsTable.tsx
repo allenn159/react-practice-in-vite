@@ -12,16 +12,19 @@ import {
   Flex,
 } from "@chakra-ui/react";
 import { useProductDashboardContext } from "./ProductsDashboardContext";
-import { CustomSpinner } from "../misc";
+import { formatUnixTimestamp } from "../utils";
 
 export function ProductsTable({ ...props }: ChakraProps) {
-  const { isLoading, products } = useProductDashboardContext();
+  const { products } = useProductDashboardContext();
 
-  console.log(products);
   return (
     <>
-      {isLoading && <CustomSpinner mt="24" />}
-      <Table variant="striped" colorScheme="gray" {...props}>
+      <Table
+        variant="striped"
+        colorScheme="gray"
+        {...props}
+        backgroundColor="white"
+      >
         <Thead>
           <Tr>
             <Th position="sticky" top={0} bg="gray.200" zIndex={1}>
@@ -40,6 +43,9 @@ export function ProductsTable({ ...props }: ChakraProps) {
               Purchase Price
             </Th>
             <Th position="sticky" top={0} bg="gray.200" zIndex={1}>
+              Fees
+            </Th>
+            <Th position="sticky" top={0} bg="gray.200" zIndex={1}>
               Sold Price
             </Th>
             <Th position="sticky" top={0} bg="gray.200" zIndex={1}>
@@ -47,6 +53,9 @@ export function ProductsTable({ ...props }: ChakraProps) {
             </Th>
             <Th position="sticky" top={0} bg="gray.200" zIndex={1}>
               Tags
+            </Th>
+            <Th position="sticky" top={0} bg="gray.200" zIndex={1}>
+              Date
             </Th>
           </Tr>
         </Thead>
@@ -69,6 +78,9 @@ export function ProductsTable({ ...props }: ChakraProps) {
                 <Text color="black">{product.purchase_price}</Text>
               </Td>
               <Td>
+                <Text color="black">{product.fees}</Text>
+              </Td>
+              <Td>
                 <Text color="black">{product.sold_price}</Text>
               </Td>
               <Td>
@@ -82,6 +94,11 @@ export function ProductsTable({ ...props }: ChakraProps) {
                     </Tag>
                   ))}
                 </Flex>
+              </Td>
+              <Td>
+                <Text color="black">
+                  {formatUnixTimestamp(product.created_at, "MMMM d, yyyy")}
+                </Text>
               </Td>
             </Tr>
           ))}
