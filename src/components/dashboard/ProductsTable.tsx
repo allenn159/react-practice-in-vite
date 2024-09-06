@@ -18,49 +18,35 @@ export function ProductsTable({ ...props }: ChakraProps) {
   const { products } = useProductDashboardContext();
 
   return (
-    <>
-      <Table
-        variant="striped"
-        colorScheme="gray"
-        {...props}
-        backgroundColor="white"
-      >
-        <Thead>
-          <Tr>
-            <Th position="sticky" top={0} bg="gray.200" zIndex={1}>
-              <Checkbox
-                isChecked={false}
-                colorScheme="blue"
-                borderColor="blue.400"
-                _hover={{ borderColor: "blue.500" }}
-                _focus={{ boxShadow: "0 0 0 3px rgba(66, 153, 225, 0.6)" }} // Focus outline
-              />
-            </Th>
-            <Th position="sticky" top={0} bg="gray.200" zIndex={1}>
-              Name
-            </Th>
-            <Th position="sticky" top={0} bg="gray.200" zIndex={1}>
-              Purchase Price
-            </Th>
-            <Th position="sticky" top={0} bg="gray.200" zIndex={1}>
-              Fees
-            </Th>
-            <Th position="sticky" top={0} bg="gray.200" zIndex={1}>
-              Sold Price
-            </Th>
-            <Th position="sticky" top={0} bg="gray.200" zIndex={1}>
-              Sold Date
-            </Th>
-            <Th position="sticky" top={0} bg="gray.200" zIndex={1}>
-              Tags
-            </Th>
-            <Th position="sticky" top={0} bg="gray.200" zIndex={1}>
-              Date
-            </Th>
-          </Tr>
-        </Thead>
-        <Tbody>
-          {products?.map((product) => (
+    <Table
+      variant="striped"
+      colorScheme="gray"
+      backgroundColor="white"
+      {...props}
+    >
+      <Thead position="sticky" top={0} bg="gray.200" zIndex={1}>
+        <Tr>
+          <Th>
+            <Checkbox
+              isChecked={false}
+              colorScheme="blue"
+              borderColor="blue.400"
+              _hover={{ borderColor: "blue.500" }}
+              _focus={{ boxShadow: "0 0 0 3px rgba(66, 153, 225, 0.6)" }} // Focus outline
+            />
+          </Th>
+          <Th>Name</Th>
+          <Th>Purchase Price</Th>
+          <Th>Fees</Th>
+          <Th>Sold Price</Th>
+          <Th>Sold Date</Th>
+          <Th>Tags</Th>
+          <Th>Date</Th>
+        </Tr>
+      </Thead>
+      <Tbody>
+        {products && products.length > 0 ? (
+          products.map((product) => (
             <Tr key={product.id}>
               <Td>
                 <Checkbox
@@ -101,9 +87,15 @@ export function ProductsTable({ ...props }: ChakraProps) {
                 </Text>
               </Td>
             </Tr>
-          ))}
-        </Tbody>
-      </Table>
-    </>
+          ))
+        ) : (
+          <Tr>
+            <Td colSpan={8} textAlign="center" py="4">
+              <Text color="black">No additional products were found 😲</Text>
+            </Td>
+          </Tr>
+        )}
+      </Tbody>
+    </Table>
   );
 }

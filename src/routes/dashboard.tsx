@@ -7,11 +7,11 @@ import {
 
 export default function Dashboard() {
   return (
-    <Box overflowX="auto" overflowY="hidden" borderRadius="4px" mt="10">
+    <Box borderRadius="4px" mt="10">
       <ProductsDashboardProvider>
         <ProductsDashboardControls mb="4">
-          <Box height="800px" overflowY="auto">
-            <ProductsTable />
+          <Box maxHeight="800px" overflowY="auto">
+            <ProductsTable minHeight="800px" />
           </Box>
         </ProductsDashboardControls>
       </ProductsDashboardProvider>

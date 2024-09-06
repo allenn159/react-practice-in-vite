@@ -14,20 +14,23 @@ export default function RootLayout() {
   const navigate = useNavigate();
 
   return (
-    <ClerkProvider
-      routerPush={(to) => navigate(to)}
-      routerReplace={(to) => navigate(to, { replace: true })}
-      publishableKey={PUBLISHABLE_KEY}
+    <Box
+      backgroundColor="gray.700"
+      textColor="white"
+      minHeight="100vh"
+      position="relative"
     >
-      <Box backgroundColor="gray.700" textColor="white" minHeight="100vh">
+      <ClerkProvider
+        routerPush={(to) => navigate(to)}
+        routerReplace={(to) => navigate(to, { replace: true })}
+        publishableKey={PUBLISHABLE_KEY}
+      >
         <Header />
-        <main>
-          <Box mx="10%">
-            <Outlet />
-          </Box>
-        </main>
+        <Box paddingBottom="200px" as="main" mx="5%">
+          <Outlet />
+        </Box>
         <Footer />
-      </Box>
-    </ClerkProvider>
+      </ClerkProvider>
+    </Box>
   );
 }

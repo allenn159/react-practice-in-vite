@@ -4,8 +4,8 @@ import { useProducts } from "~/requestHooks";
 import { useGetCurrentTime } from "../custom_hooks";
 import type { Product } from "~/types";
 
-const DEFAULT_LIMIT = 50;
-const DEFAULT_OFFSET = 0;
+export const DEFAULT_LIMIT = 50;
+export const DEFAULT_OFFSET = 0;
 
 type SortOptions = "ASC" | "DESC";
 
@@ -32,6 +32,8 @@ export type ProductsDashboardContext = {
   isLoading: boolean;
   products: Product[] | undefined;
   error: Error | null;
+  next: () => void;
+  previous: () => void;
 };
 
 export const ProductsDashboardContext = createContext<ProductsDashboardContext>(
@@ -86,6 +88,14 @@ export function ProductsDashboardProvider({
     setSort({ name: undefined, created_at: order });
   };
 
+  const next = () => {
+    setOffset((prev) => prev + DEFAULT_LIMIT);
+  };
+
+  const previous = () => {
+    setOffset((prev) => prev - DEFAULT_LIMIT);
+  };
+
   const productsDashboardContext: ProductsDashboardContext = {
     searchTerm,
     setSearchTerm,
@@ -103,6 +113,8 @@ export function ProductsDashboardProvider({
     products,
     isLoading,
     error,
+    next,
+    previous,
   };
   return (
     <ProductsDashboardContext.Provider value={productsDashboardContext}>
