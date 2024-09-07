@@ -10,17 +10,21 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@chakra-ui/icons": "^2.1.1",
     "@chakra-ui/react": "^2.8.2",
     "@clerk/clerk-react": "^5.4.0",
     "@emotion/react": "^11.13.0",
     "@emotion/styled": "^11.13.0",
     "@fontsource/inter": "^5.0.20",
     "@tanstack/react-query": "^5.51.23",
+    "@tanstack/react-query-devtools": "^5.55.0",
     "@uidotdev/usehooks": "^2.4.1",
     "date-fns": "^3.6.0",
     "framer-motion": "^11.3.24",
     "react": "^18.3.1",
+    "react-datepicker": "^7.3.0",
     "react-dom": "^18.3.1",
+    "react-hook-form": "^7.53.0",
     "react-router-dom": "^6.26.0"
   },
   "devDependencies": {

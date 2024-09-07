@@ -1,8 +1,8 @@
 import { Box } from "@chakra-ui/react";
 import {
-  ProductsTable,
   ProductsDashboardProvider,
   ProductsDashboardControls,
+  ProductsTableContainer,
 } from "~/components/dashboard";
 
 export default function Dashboard() {
@@ -10,9 +10,7 @@ export default function Dashboard() {
     <Box borderRadius="4px" mt="10">
       <ProductsDashboardProvider>
         <ProductsDashboardControls mb="4">
-          <Box maxHeight="800px" overflowY="auto">
-            <ProductsTable minHeight="800px" />
-          </Box>
+          <ProductsTableContainer />
         </ProductsDashboardControls>
       </ProductsDashboardProvider>
     </Box>

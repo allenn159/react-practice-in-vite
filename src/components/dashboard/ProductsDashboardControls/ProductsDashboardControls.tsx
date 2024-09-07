@@ -3,6 +3,7 @@ import { Flex, ChakraProps } from "@chakra-ui/react";
 import { SortSelect } from "./SortSelect";
 import { SearchBar } from "./SearchBar";
 import { NextPrevButtons } from "./NextPrevButtons";
+import { AddProductControls } from "./AddProductControls";
 
 type ProductDashboardControls = {
   children: ReactNode;
@@ -15,7 +16,9 @@ export function ProductsDashboardControls({
   return (
     <>
       <Flex justifyContent="space-between" alignItems="center" {...props}>
-        <Flex>Hi</Flex>
+        <Flex>
+          <AddProductControls />
+        </Flex>
         <Flex gap="3">
           <SearchBar />
           <SortSelect />

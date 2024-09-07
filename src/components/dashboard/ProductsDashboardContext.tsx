@@ -1,10 +1,10 @@
 import { useState, useContext, createContext, ReactNode } from "react";
 import { useDebounce } from "@uidotdev/usehooks";
-import { useProducts } from "~/requestHooks";
-import { useGetCurrentTime } from "../custom_hooks";
-import type { Product } from "~/types";
+import { useProducts, useAddProduct, AddProductParams } from "~/requestHooks";
+import type { Product, GetProductsQueryParams } from "~/types";
+import { UseMutationResult } from "@tanstack/react-query";
 
-export const DEFAULT_LIMIT = 50;
+export const DEFAULT_LIMIT = 13;
 export const DEFAULT_OFFSET = 0;
 
 type SortOptions = "ASC" | "DESC";
@@ -17,13 +17,12 @@ export type ProductsDashboardContext = {
   setLimit: (value: number) => void;
   offset: number;
   setOffset: (value: number) => void;
-  dateRange: {
+  dateRange?: {
     from: number;
     to: number;
   };
-  updateFrom: (value: number) => void;
-  updateTo: (value: number) => void;
-  sort?: {
+  setDateRange: (value: { from: number; to: number }) => void;
+  sort: {
     name?: SortOptions;
     created_at?: SortOptions;
   };
@@ -34,6 +33,8 @@ export type ProductsDashboardContext = {
   error: Error | null;
   next: () => void;
   previous: () => void;
+  addProduct: UseMutationResult<unknown, unknown, AddProductParams, unknown>;
+  getProductsParams: GetProductsQueryParams;
 };
 
 export const ProductsDashboardContext = createContext<ProductsDashboardContext>(
@@ -49,43 +50,32 @@ export function ProductsDashboardProvider({
   const debouncedSearchTerm = useDebounce(searchTerm, 500);
   const [limit, setLimit] = useState(DEFAULT_LIMIT);
   const [offset, setOffset] = useState(DEFAULT_OFFSET);
-  const currentTime = useGetCurrentTime();
-  const [dateRange, setDateRange] = useState({ from: 0, to: currentTime });
-  const [sort, setSort] = useState<
-    undefined | ProductsDashboardContext["sort"]
-  >({ name: undefined, created_at: "DESC" });
-  const {
-    data: products,
-    isLoading,
-    error,
-  } = useProducts({
+  const [dateRange, setDateRange] = useState<
+    | undefined
+    | {
+        from: number;
+        to: number;
+      }
+  >(undefined);
+  const [sort, setSort] = useState<ProductsDashboardContext["sort"]>({
+    created_at: "DESC",
+  });
+  const getProductsParams = {
     limit: limit,
     offset: offset,
     searchTerm: debouncedSearchTerm,
     dateRange: dateRange,
     sort: sort,
-  });
-
-  const updateFrom = (from: number) => {
-    setDateRange((prevRange) => ({
-      ...prevRange,
-      from: from,
-    }));
   };
-
-  const updateTo = (to: number) => {
-    setDateRange((prevRange) => ({
-      ...prevRange,
-      to: to,
-    }));
-  };
+  const { data: products, isLoading, error } = useProducts(getProductsParams);
+  const addProduct = useAddProduct();
 
   const sortByName = (order: SortOptions) => {
-    setSort({ name: order, created_at: undefined });
+    setSort({ name: order });
   };
 
   const sortByCreatedAt = (order: SortOptions) => {
-    setSort({ name: undefined, created_at: order });
+    setSort({ created_at: order });
   };
 
   const next = () => {
@@ -105,8 +95,7 @@ export function ProductsDashboardProvider({
     offset,
     setOffset,
     dateRange,
-    updateFrom,
-    updateTo,
+    setDateRange,
     sort,
     sortByName,
     sortByCreatedAt,
@@ -115,6 +104,8 @@ export function ProductsDashboardProvider({
     error,
     next,
     previous,
+    addProduct,
+    getProductsParams,
   };
   return (
     <ProductsDashboardContext.Provider value={productsDashboardContext}>

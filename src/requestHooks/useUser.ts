@@ -8,7 +8,7 @@ export function useUser() {
   return useQuery({
     queryKey: ["user"],
     queryFn: async () => {
-      return await fetchWrapper<User>("GET", "http://localhost:3000/api/user");
+      return await fetchWrapper<User>("GET", "api/user");
     },
     refetchOnWindowFocus: false,
     staleTime: Infinity,

@@ -25,6 +25,12 @@ const useFetch = () => {
       headers["Authorization"] = `Bearer ${token}`;
     }
 
+    if (import.meta.env.MODE === "development") {
+      url = "http://localhost:3000/" + url;
+    } else {
+      console.log("Not in development mode");
+    }
+
     const response = await fetch(url, {
       method: requestMethod,
       headers: { ...headers },
