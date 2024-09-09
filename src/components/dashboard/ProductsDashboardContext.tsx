@@ -4,7 +4,7 @@ import { useProducts, useAddProduct, AddProductParams } from "~/requestHooks";
 import type { Product, GetProductsQueryParams } from "~/types";
 import { UseMutationResult } from "@tanstack/react-query";
 
-export const DEFAULT_LIMIT = 13;
+export const DEFAULT_LIMIT = 50;
 export const DEFAULT_OFFSET = 0;
 
 type SortOptions = "ASC" | "DESC";
@@ -68,7 +68,7 @@ export function ProductsDashboardProvider({
     sort: sort,
   };
   const { data: products, isLoading, error } = useProducts(getProductsParams);
-  const addProduct = useAddProduct();
+  const addProduct = useAddProduct(getProductsParams);
 
   const sortByName = (order: SortOptions) => {
     setSort({ name: order });

@@ -1,2 +1,2 @@
 export * from "./ProductsDashboardControls";
-export * from "./EditProductControls";
+export * from "./ProductControls";

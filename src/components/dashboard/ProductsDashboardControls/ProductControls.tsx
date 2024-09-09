@@ -22,7 +22,7 @@ import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import type { Product } from "~/types";
 
-interface FormData {
+export interface FormData {
   name: string;
   purchase_price: string;
   fees: string;
@@ -30,24 +30,34 @@ interface FormData {
   sold_at: Date | null;
 }
 
-type EditProductControlsProps = {
+type ProductControlsProps = {
   isOpen: boolean;
   onClose: () => void;
   product: Product | null;
+  onSubmit: (data: FormData, reset?: () => void) => void;
 };
 
-export function EditProductControls({
+export function ProductControls({
   isOpen,
   onClose,
   product,
-}: EditProductControlsProps) {
+  onSubmit,
+}: ProductControlsProps) {
   const {
     control,
     handleSubmit,
     register,
     formState: { errors },
     reset,
-  } = useForm<FormData>();
+  } = useForm<FormData>({
+    defaultValues: {
+      name: "",
+      purchase_price: "0.00",
+      fees: "",
+      sold_price: "",
+      sold_at: null,
+    },
+  });
 
   useEffect(() => {
     if (product) {
@@ -60,10 +70,6 @@ export function EditProductControls({
       });
     }
   }, [product, reset]);
-
-  const onSubmit = (data: FormData) => {
-    console.log("yo");
-  };
 
   const handleOnClose = () => {
     reset();
@@ -78,7 +84,9 @@ export function EditProductControls({
           <ModalHeader>Product Details</ModalHeader>
           <ModalCloseButton />
           <ModalBody>
-            <form onSubmit={() => handleSubmit(onSubmit)}>
+            <form
+              onSubmit={() => handleSubmit((data) => onSubmit(data, reset))}
+            >
               <FormControl isInvalid={!!errors.name} mb="4">
                 <FormLabel>Product Name</FormLabel>
                 <Input
@@ -176,7 +184,10 @@ export function EditProductControls({
             <Button variant="outline" onClick={handleOnClose}>
               Cancel
             </Button>
-            <Button colorScheme="blue" onClick={handleSubmit(onSubmit)}>
+            <Button
+              colorScheme="blue"
+              onClick={handleSubmit((data) => onSubmit(data, reset))}
+            >
               Save
             </Button>
           </ModalFooter>

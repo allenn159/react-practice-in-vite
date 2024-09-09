@@ -1,38 +1,35 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useFetch } from "~/components/custom_hooks";
 import { useToast } from "@chakra-ui/react";
-import type { GetProductsQueryParams } from "~/types";
 
-export type AddProductParams = {
-  name: string;
-  purchase_price: number;
-  fees?: number;
-  sold_price?: number;
-  sold_at?: number;
+export type EditProductParams = {
+  productId: number;
+  product: {
+    name: string;
+    purchase_price: number;
+    fees?: number;
+    sold_price?: number;
+    sold_at?: number;
+  };
 };
 
-export function useAddProduct(queryParams: GetProductsQueryParams) {
+export function useAddProduct() {
   const queryClient = useQueryClient();
   const fetchWrapper = useFetch();
   const toast = useToast();
-
-  console.log(queryParams);
   const addProduct = useMutation({
-    mutationFn: (newProduct: AddProductParams) => {
-      return fetchWrapper("POST", "api/products", {
-        body: JSON.stringify([newProduct]),
+    mutationFn: (productParams: EditProductParams) => {
+      return fetchWrapper("PUT", `api/products/${productParams.productId}`, {
+        body: JSON.stringify([productParams.product]),
       });
     },
     onSuccess: async () => {
-      await queryClient.invalidateQueries({
-        queryKey: ["products", queryParams],
-      });
       await queryClient.invalidateQueries({
         queryKey: ["products"],
       });
 
       toast({
-        title: "Product successfully added.",
+        title: "Product successfully edited.",
         status: "success",
         duration: 3000,
         isClosable: true,
