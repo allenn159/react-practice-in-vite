@@ -14,7 +14,7 @@ export function calculateProfitInDollars(
 
 export function calculateProfitPercentage(
   purchasePrice: string,
-  fees: string,
+  fees: string | null,
   soldPrice: string | null
 ): number {
   if (!soldPrice) return 0;

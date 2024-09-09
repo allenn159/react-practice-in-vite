@@ -3,7 +3,7 @@ import { ProductsTable } from "~/components/dashboard";
 import { useProductDashboardContext } from "~/components/dashboard";
 
 export function ProductsTableContainer() {
-  const { products } = useProductDashboardContext();
+  const { products, isLoading } = useProductDashboardContext();
   return (
     <Box
       height="750px"
@@ -12,7 +12,7 @@ export function ProductsTableContainer() {
       backgroundColor="white"
     >
       <ProductsTable />
-      {products?.length === 0 && (
+      {!isLoading && products?.length === 0 && (
         <Flex height="full" justifyContent="center" alignItems="center">
           <Text color="black" mb="24">
             No additional products were found 😲

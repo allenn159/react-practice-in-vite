@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import { useForm, Controller } from "react-hook-form";
 import {
   Modal,
@@ -13,14 +14,13 @@ import {
   Input,
   NumberInput,
   NumberInputField,
-  useDisclosure,
   Box,
   Text,
   Flex,
 } from "@chakra-ui/react";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
-import { useProductDashboardContext } from "../ProductsDashboardContext";
+import type { Product } from "~/types";
 
 interface FormData {
   name: string;
@@ -30,42 +30,39 @@ interface FormData {
   sold_at: Date | null;
 }
 
-export function AddProductControls() {
-  const { addProduct } = useProductDashboardContext();
-  const { isOpen, onOpen, onClose } = useDisclosure();
+type EditProductControlsProps = {
+  isOpen: boolean;
+  onClose: () => void;
+  product: Product | null;
+};
+
+export function EditProductControls({
+  isOpen,
+  onClose,
+  product,
+}: EditProductControlsProps) {
   const {
     control,
     handleSubmit,
     register,
     formState: { errors },
     reset,
-  } = useForm<FormData>({
-    defaultValues: {
-      name: "",
-      purchase_price: "0.00",
-      fees: "",
-      sold_price: "",
-      sold_at: null,
-    },
-  });
+  } = useForm<FormData>();
 
-  console.log(addProduct);
+  useEffect(() => {
+    if (product) {
+      reset({
+        name: product.name,
+        purchase_price: product.purchase_price,
+        fees: product.fees || "",
+        sold_price: product.sold_price || "",
+        sold_at: product.sold_at ? new Date(product.sold_at * 1000) : null,
+      });
+    }
+  }, [product, reset]);
 
   const onSubmit = (data: FormData) => {
-    addProduct.mutate(
-      {
-        ...data,
-        purchase_price: Number(data.purchase_price),
-        fees: data.fees ? Number(data.fees) : undefined,
-        sold_price: data.sold_price ? Number(data.sold_price) : undefined,
-        sold_at: data.sold_at ? data.sold_at?.getTime() / 1000 : undefined,
-      },
-      {
-        onSuccess: () => {
-          reset();
-        },
-      }
-    );
+    console.log("yo");
   };
 
   const handleOnClose = () => {
@@ -75,14 +72,13 @@ export function AddProductControls() {
 
   return (
     <>
-      <Button onClick={onOpen}>Add Product</Button>
       <Modal isOpen={isOpen} onClose={handleOnClose}>
-        <ModalOverlay />
+        <ModalOverlay bg="rgba(0, 0, 0, 0.1)" />
         <ModalContent>
           <ModalHeader>Product Details</ModalHeader>
           <ModalCloseButton />
           <ModalBody>
-            <form>
+            <form onSubmit={() => handleSubmit(onSubmit)}>
               <FormControl isInvalid={!!errors.name} mb="4">
                 <FormLabel>Product Name</FormLabel>
                 <Input
@@ -180,12 +176,8 @@ export function AddProductControls() {
             <Button variant="outline" onClick={handleOnClose}>
               Cancel
             </Button>
-            <Button
-              isDisabled={addProduct.isPending}
-              colorScheme="blue"
-              onClick={handleSubmit(onSubmit)}
-            >
-              Submit
+            <Button colorScheme="blue" onClick={handleSubmit(onSubmit)}>
+              Save
             </Button>
           </ModalFooter>
         </ModalContent>
