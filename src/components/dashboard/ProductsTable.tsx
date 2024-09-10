@@ -17,7 +17,7 @@ import { useProductDashboardContext } from "./ProductsDashboardContext";
 import { formatUnixTimestamp } from "../utils";
 import { ProfitCell } from "./ProfitCell";
 import type { Product } from "~/types";
-import { ProductControls } from "./ProductsDashboardControls";
+import { EditProductControls } from "./ProductsDashboardControls/EditProductControls";
 
 export function ProductsTable({ ...props }: ChakraProps) {
   const { products } = useProductDashboardContext();
@@ -31,7 +31,7 @@ export function ProductsTable({ ...props }: ChakraProps) {
 
   return (
     <>
-      <ProductControls
+      <EditProductControls
         isOpen={isOpen}
         onClose={onClose}
         product={selectedProduct}

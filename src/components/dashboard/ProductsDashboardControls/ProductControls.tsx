@@ -30,11 +30,12 @@ export interface FormData {
   sold_at: Date | null;
 }
 
-type ProductControlsProps = {
+export type ProductControlsProps = {
   isOpen: boolean;
   onClose: () => void;
   product: Product | null;
   onSubmit: (data: FormData, reset?: () => void) => void;
+  isPending: boolean;
 };
 
 export function ProductControls({
@@ -42,6 +43,7 @@ export function ProductControls({
   onClose,
   product,
   onSubmit,
+  isPending,
 }: ProductControlsProps) {
   const {
     control,
@@ -185,6 +187,7 @@ export function ProductControls({
               Cancel
             </Button>
             <Button
+              isDisabled={isPending}
               colorScheme="blue"
               onClick={handleSubmit((data) => onSubmit(data, reset))}
             >

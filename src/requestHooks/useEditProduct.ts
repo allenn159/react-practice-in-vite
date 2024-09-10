@@ -3,7 +3,6 @@ import { useFetch } from "~/components/custom_hooks";
 import { useToast } from "@chakra-ui/react";
 
 export type EditProductParams = {
-  productId: number;
   product: {
     name: string;
     purchase_price: number;
@@ -11,22 +10,27 @@ export type EditProductParams = {
     sold_price?: number;
     sold_at?: number;
   };
+  productId?: number;
 };
 
-export function useAddProduct() {
+export function useEditProduct() {
   const queryClient = useQueryClient();
   const fetchWrapper = useFetch();
   const toast = useToast();
-  const addProduct = useMutation({
-    mutationFn: (productParams: EditProductParams) => {
-      return fetchWrapper("PUT", `api/products/${productParams.productId}`, {
-        body: JSON.stringify([productParams.product]),
+  const editProduct = useMutation({
+    mutationFn: (params: EditProductParams) => {
+      return fetchWrapper("PUT", `api/products/${params.productId}`, {
+        body: JSON.stringify(params.product),
       });
     },
-    onSuccess: async () => {
+    onSuccess: async (_, variables) => {
       await queryClient.invalidateQueries({
         queryKey: ["products"],
       });
+
+      // await queryClient.invalidateQueries({
+      //   queryKey: ["product", variables.id],
+      // });
 
       toast({
         title: "Product successfully edited.",
@@ -36,7 +40,16 @@ export function useAddProduct() {
         position: "top",
       });
     },
+    onError: () => {
+      toast({
+        title: "There was a problem processing your request.",
+        status: "error",
+        duration: 3000,
+        isClosable: true,
+        position: "top",
+      });
+    },
   });
 
-  return addProduct;
+  return editProduct;
 }

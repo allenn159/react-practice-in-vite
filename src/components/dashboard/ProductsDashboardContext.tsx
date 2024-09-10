@@ -1,6 +1,12 @@
 import { useState, useContext, createContext, ReactNode } from "react";
 import { useDebounce } from "@uidotdev/usehooks";
-import { useProducts, useAddProduct, AddProductParams } from "~/requestHooks";
+import {
+  useProducts,
+  useAddProduct,
+  AddProductParams,
+  useEditProduct,
+  EditProductParams,
+} from "~/requestHooks";
 import type { Product, GetProductsQueryParams } from "~/types";
 import { UseMutationResult } from "@tanstack/react-query";
 
@@ -34,6 +40,7 @@ export type ProductsDashboardContext = {
   next: () => void;
   previous: () => void;
   addProduct: UseMutationResult<unknown, unknown, AddProductParams, unknown>;
+  editProduct: UseMutationResult<unknown, unknown, EditProductParams, unknown>;
   getProductsParams: GetProductsQueryParams;
 };
 
@@ -68,7 +75,8 @@ export function ProductsDashboardProvider({
     sort: sort,
   };
   const { data: products, isLoading, error } = useProducts(getProductsParams);
-  const addProduct = useAddProduct(getProductsParams);
+  const addProduct = useAddProduct();
+  const editProduct = useEditProduct();
 
   const sortByName = (order: SortOptions) => {
     setSort({ name: order });
@@ -105,6 +113,7 @@ export function ProductsDashboardProvider({
     next,
     previous,
     addProduct,
+    editProduct,
     getProductsParams,
   };
   return (

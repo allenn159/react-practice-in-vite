@@ -1,7 +1,6 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useFetch } from "~/components/custom_hooks";
 import { useToast } from "@chakra-ui/react";
-import type { GetProductsQueryParams } from "~/types";
 
 export type AddProductParams = {
   name: string;
@@ -11,12 +10,11 @@ export type AddProductParams = {
   sold_at?: number;
 };
 
-export function useAddProduct(queryParams: GetProductsQueryParams) {
+export function useAddProduct() {
   const queryClient = useQueryClient();
   const fetchWrapper = useFetch();
   const toast = useToast();
 
-  console.log(queryParams);
   const addProduct = useMutation({
     mutationFn: (newProduct: AddProductParams) => {
       return fetchWrapper("POST", "api/products", {
@@ -24,9 +22,6 @@ export function useAddProduct(queryParams: GetProductsQueryParams) {
       });
     },
     onSuccess: async () => {
-      await queryClient.invalidateQueries({
-        queryKey: ["products", queryParams],
-      });
       await queryClient.invalidateQueries({
         queryKey: ["products"],
       });
