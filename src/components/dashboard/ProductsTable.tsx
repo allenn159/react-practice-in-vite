@@ -9,8 +9,6 @@ import {
   Checkbox,
   ChakraProps,
   Text,
-  Tag,
-  Flex,
   useDisclosure,
 } from "@chakra-ui/react";
 import { useProductDashboardContext } from "./ProductsDashboardContext";
@@ -20,7 +18,8 @@ import type { Product } from "~/types";
 import { EditProductControls } from "./ProductsDashboardControls/EditProductControls";
 
 export function ProductsTable({ ...props }: ChakraProps) {
-  const { products } = useProductDashboardContext();
+  const { products, selectionOptions } = useProductDashboardContext();
+  const { isSelected, toggle, toggleAll, allSelected } = selectionOptions;
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
 
@@ -46,11 +45,12 @@ export function ProductsTable({ ...props }: ChakraProps) {
           <Tr>
             <Th>
               <Checkbox
-                isChecked={false}
+                isChecked={allSelected}
                 colorScheme="blue"
                 borderColor="blue.400"
                 _hover={{ borderColor: "blue.500" }}
-                _focus={{ boxShadow: "0 0 0 3px rgba(66, 153, 225, 0.6)" }} // Focus outline
+                _focus={{ boxShadow: "0 0 0 3px rgba(66, 153, 225, 0.6)" }}
+                onChange={toggleAll}
               />
             </Th>
             <Th>Name</Th>
@@ -59,59 +59,47 @@ export function ProductsTable({ ...props }: ChakraProps) {
             <Th>Fees</Th>
             <Th>Profit</Th>
             <Th>Sold Date</Th>
-            <Th>Tags</Th>
             <Th>Date</Th>
           </Tr>
         </Thead>
         <Tbody>
           {products?.map((product) => (
-            <Tr
-              onClick={() => onHandleRowClick(product)}
-              _hover={{ bg: "blue.200" }}
-              cursor="pointer"
-              key={product.id}
-            >
+            <Tr _hover={{ bg: "blue.200" }} cursor="pointer" key={product.id}>
               <Td>
                 <Checkbox
-                  isChecked={false}
+                  isChecked={isSelected(product.id)}
                   colorScheme="blue"
                   borderColor="blue.400"
                   _hover={{ borderColor: "blue.500" }}
                   _focus={{ boxShadow: "0 0 0 3px rgba(66, 153, 225, 0.6)" }}
+                  onChange={() => toggle(product.id)}
                 />
               </Td>
-              <Td>
+              <Td onClick={() => onHandleRowClick(product)}>
                 <Text color="black">{product.name}</Text>
               </Td>
-              <Td>
+              <Td onClick={() => onHandleRowClick(product)}>
                 <Text color="black">${product.purchase_price}</Text>
               </Td>
 
-              <Td>
+              <Td onClick={() => onHandleRowClick(product)}>
                 {product.sold_price && (
                   <Text color="black">${product.sold_price}</Text>
                 )}
               </Td>
-              <Td>
+              <Td onClick={() => onHandleRowClick(product)}>
                 {product.fees && <Text color="black">${product.fees}</Text>}
               </Td>
-              <ProfitCell product={product} />
-              <Td>
+              <Td onClick={() => onHandleRowClick(product)}>
+                <ProfitCell product={product} />
+              </Td>
+              <Td onClick={() => onHandleRowClick(product)}>
                 <Text color="black">
                   {product.sold_at &&
                     formatUnixTimestamp(product.sold_at, "MMMM d, yyyy")}
                 </Text>
               </Td>
-              <Td>
-                <Flex gap="2">
-                  {product.tags?.map((tag) => (
-                    <Tag key={tag.id} bg={tag.color} color={tag.text_color}>
-                      {tag.name}
-                    </Tag>
-                  ))}
-                </Flex>
-              </Td>
-              <Td>
+              <Td onClick={() => onHandleRowClick(product)}>
                 <Text color="black">
                   {formatUnixTimestamp(product.created_at, "MMMM d, yyyy")}
                 </Text>

@@ -7,7 +7,7 @@ export function EditProductControls({
   isOpen,
   onClose,
   product,
-}: Omit<ProductControlsProps, "onSubmit">) {
+}: Omit<ProductControlsProps, "onSubmit" | "isPending">) {
   const { editProduct } = useProductDashboardContext();
 
   const onSubmit = (data: FormData) => {

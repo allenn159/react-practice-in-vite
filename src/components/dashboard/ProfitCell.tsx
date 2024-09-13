@@ -1,4 +1,4 @@
-import { Td, Flex, Text } from "@chakra-ui/react";
+import { Flex, Text } from "@chakra-ui/react";
 import type { Product } from "~/types";
 import { calculateProfitInDollars, calculateProfitPercentage } from "../utils";
 
@@ -12,6 +12,15 @@ export function ProfitCell({ product }: ProfitCellProps) {
     product.fees,
     product.sold_price
   );
+  const profit = () => {
+    if (Number(profitInDollars) > 0) {
+      return `+$${profitInDollars}`;
+    }
+
+    if (Number(profitInDollars) < 0) {
+      return `-$${profitInDollars.substring(1)}`;
+    }
+  };
 
   const color = () => {
     if (Number(profitInDollars) > 0) {
@@ -33,7 +42,7 @@ export function ProfitCell({ product }: ProfitCellProps) {
     );
 
     if (profitAsPercentage > 0) {
-      return `(+${profitAsPercentage}%)`;
+      return `(+$${profitAsPercentage}%)`;
     }
 
     if (profitAsPercentage < 0) {
@@ -41,11 +50,9 @@ export function ProfitCell({ product }: ProfitCellProps) {
     }
   };
   return (
-    <Td>
-      <Flex color={color()} gap="2">
-        <Text>${profitInDollars}</Text>
-        <Text>{profitPercentage()}</Text>
-      </Flex>
-    </Td>
+    <Flex color={color()} gap="2">
+      <Text>{profit()}</Text>
+      <Text>{profitPercentage()}</Text>
+    </Flex>
   );
 }

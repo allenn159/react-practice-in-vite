@@ -9,6 +9,7 @@ import {
 } from "~/requestHooks";
 import type { Product, GetProductsQueryParams } from "~/types";
 import { UseMutationResult } from "@tanstack/react-query";
+import { useSelection, Selection } from "../custom_hooks";
 
 export const DEFAULT_LIMIT = 50;
 export const DEFAULT_OFFSET = 0;
@@ -35,6 +36,7 @@ export type ProductsDashboardContext = {
   sortByName: (order: SortOptions) => void;
   sortByCreatedAt: (order: SortOptions) => void;
   isLoading: boolean;
+  isFetching: boolean;
   products: Product[] | undefined;
   error: Error | null;
   next: () => void;
@@ -42,6 +44,7 @@ export type ProductsDashboardContext = {
   addProduct: UseMutationResult<unknown, unknown, AddProductParams, unknown>;
   editProduct: UseMutationResult<unknown, unknown, EditProductParams, unknown>;
   getProductsParams: GetProductsQueryParams;
+  selectionOptions: Selection<number>;
 };
 
 export const ProductsDashboardContext = createContext<ProductsDashboardContext>(
@@ -74,9 +77,41 @@ export function ProductsDashboardProvider({
     dateRange: dateRange,
     sort: sort,
   };
-  const { data: products, isLoading, error } = useProducts(getProductsParams);
+  const {
+    data: products,
+    isLoading,
+    error,
+    isFetching,
+  } = useProducts(getProductsParams);
   const addProduct = useAddProduct();
   const editProduct = useEditProduct();
+
+  const productIds = products?.map((product) => product.id);
+  const {
+    selected,
+    allSelected,
+    someSelected,
+    toggleAll,
+    toggle,
+    isSelected,
+    clear,
+    enable,
+    disable,
+    isEnabled,
+  } = useSelection<number>({ options: productIds || [] });
+
+  const selectionOptions: Selection<number> = {
+    selected,
+    allSelected,
+    someSelected,
+    toggleAll,
+    toggle,
+    isSelected,
+    clear,
+    enable,
+    disable,
+    isEnabled,
+  };
 
   const sortByName = (order: SortOptions) => {
     setSort({ name: order });
@@ -109,12 +144,14 @@ export function ProductsDashboardProvider({
     sortByCreatedAt,
     products,
     isLoading,
+    isFetching,
     error,
     next,
     previous,
     addProduct,
     editProduct,
     getProductsParams,
+    selectionOptions,
   };
   return (
     <ProductsDashboardContext.Provider value={productsDashboardContext}>

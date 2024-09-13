@@ -2,7 +2,7 @@ import { useState } from "react";
 
 type UseSelectionOptions<T> = {
   options: T[];
-  initiallyDisabled: boolean;
+  initiallyDisabled?: boolean;
 };
 
 const equalFunction = <T>(a: T, b: T) => a === b;
@@ -72,7 +72,7 @@ export function useSelection<T>({
   return selection;
 }
 
-type Selection<T> = {
+export type Selection<T> = {
   selected: T[];
   allSelected: boolean;
   someSelected: boolean;

@@ -9,7 +9,7 @@ export default function Dashboard() {
   return (
     <Box borderRadius="4px" mt="10">
       <ProductsDashboardProvider>
-        <ProductsDashboardControls mb="4">
+        <ProductsDashboardControls>
           <ProductsTableContainer />
         </ProductsDashboardControls>
       </ProductsDashboardProvider>

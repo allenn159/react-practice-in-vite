@@ -11,7 +11,6 @@ import theme from "./theme";
 import "@fontsource/inter/400.css";
 import "@fontsource/inter/600.css";
 import "@fontsource/inter/700.css";
-import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 
 const queryClient = new QueryClient();
 
@@ -44,7 +43,6 @@ ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(
       <ChakraProvider theme={theme}>
         <ColorModeScript initialColorMode={theme.config.initialColorMode} />
         <RouterProvider router={router} />
-        <ReactQueryDevtools initialIsOpen={true} />
       </ChakraProvider>
     </QueryClientProvider>
   </React.StrictMode>
