@@ -23,7 +23,7 @@ export function DeleteProductsControl() {
     deleteProducts.mutate(selected, {
       onSuccess: () => {
         clear();
-        onClose();
+        onClose( );
       },
     });
   };

@@ -23,7 +23,7 @@ export function NextPrevButtons({ ...props }: ChakraProps) {
       <Button
         onClick={next}
         isDisabled={
-          isLoading || (productCount ? productCount < DEFAULT_LIMIT : false)
+          isLoading || (productCount ? productCount < DEFAULT_LIMIT : true)
         }
         width="100px"
       >

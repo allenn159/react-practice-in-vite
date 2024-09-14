@@ -13,10 +13,8 @@ export function ProductsTableContainer() {
     >
       <ProductsTable />
       {!isLoading && products?.length === 0 && (
-        <Flex height="full" justifyContent="center" alignItems="center">
-          <Text color="black" mb="24">
-            No additional products were found 😲
-          </Text>
+        <Flex mt="24" justifyContent="center" alignItems="center">
+          <Text color="black">No additional products were found 😲</Text>
         </Flex>
       )}
     </Box>

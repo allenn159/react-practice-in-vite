@@ -23,14 +23,10 @@ export function useEditProduct() {
         body: JSON.stringify(params.product),
       });
     },
-    onSuccess: async (_, variables) => {
+    onSuccess: async () => {
       await queryClient.invalidateQueries({
         queryKey: ["products"],
       });
-
-      // await queryClient.invalidateQueries({
-      //   queryKey: ["product", variables.id],
-      // });
 
       toast({
         title: "Product successfully edited.",

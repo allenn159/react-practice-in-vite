@@ -45,7 +45,7 @@ export function ProductsTable({ ...props }: ChakraProps) {
           <Tr>
             <Th>
               <Checkbox
-                isChecked={allSelected}
+                isChecked={products && products.length > 0 && allSelected}
                 colorScheme="blue"
                 borderColor="blue.400"
                 _hover={{ borderColor: "blue.500" }}
